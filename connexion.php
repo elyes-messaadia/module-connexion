@@ -66,7 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         echo '</ul>';
     } ?>
-    <form method="post" action="">
+    <!-- What should i put in the form action attribute? -->
+    <form method="post" action=""> 
         <label for="login">Login:</label>
         <input type="text" name="login" required><br>
         <label for="password">Password:</label>
