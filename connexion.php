@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Validate user
-        $hashed_password = hash('sha256', $password);
+        $hashed_password = hash('sha256', $password); //  Changer le mode d'encryption du mot de passe
         $stmt = $conn->prepare("SELECT id, prenom, nom, login FROM utilisateurs WHERE login = ? AND password = ?");
         $stmt->bind_param("ss", $login, $hashed_password);
         $stmt->execute();
