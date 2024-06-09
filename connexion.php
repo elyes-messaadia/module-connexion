@@ -1,78 +1,59 @@
 <?php
 session_start();
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+require 'database.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $login = trim($_POST['login']);
     $password = $_POST['password'];
 
-    // Validate inputs
-    $errors = [];
-    if (empty($login) || strlen($login) > 255) {
-        $errors[] = "Invalid login.";
-    }
-    if (strlen($password) < 1) {
-        $errors[] = "Invalid password.";
-    }
+    if (empty($login) || empty($password)) {
+        $error = 'Tous les champs sont requis.';
+    } else {
+        $pdo = getDBConnection();
 
-    if (empty($errors)) {
-        // Database connection
-        $conn = new mysqli('localhost', 'root', '', 'moduleconnexion');
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        try {
+            $stmt = $pdo->prepare("SELECT password FROM utilisateurs WHERE login = ?");
+            $stmt->execute([$login]);
+            $user = $stmt->fetch();
 
-        // Validate user
-        $hashed_password = hash('sha256', $password); //  Changer le mode d'encryption du mot de passe
-        $stmt = $conn->prepare("SELECT id, prenom, nom, login FROM utilisateurs WHERE login = ? AND password = ?");
-        $stmt->bind_param("ss", $login, $hashed_password);
-        $stmt->execute();
-        $stmt->store_result();
-
-        if ($stmt->num_rows > 0) {
-            $stmt->bind_result($id, $prenom, $nom, $login);
-            $stmt->fetch();
-            $_SESSION['id'] = $id;
-            $_SESSION['login'] = $login;
-            $_SESSION['prenom'] = $prenom;
-            $_SESSION['nom'] = $nom;
-
-            if ($login == 'admin') {
-                header("Location: admin.php");
+            if ($user && password_verify($password, $user['password'])) {
+                $_SESSION['login'] = $login;
+                header('Location: profil.php');
+                exit();
             } else {
-                header("Location: profil.php");
+                $error = 'Login ou mot de passe incorrect.';
             }
-        } else {
-            $errors[] = "Invalid login or password.";
+        } catch (PDOException $e) {
+            $error = 'Une erreur s\'est produite lors de la connexion. Veuillez réessayer.';
         }
-
-        $stmt->close();
-        $conn->close();
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="zaza.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
+    <link rel="stylesheet" href="zaza.css">
 </head>
 <body>
     <h1>Connexion</h1>
-    <?php if (!empty($errors)) {
-        echo '<ul>';
-        foreach ($errors as $error) {
-            echo "<li>$error</li>";
-        }
-        echo '</ul>';
-    } ?>
-    <!-- What should i put in the form action attribute? -->
-    <form method="post" action=""> 
-        <label for="login">Login:</label>
-        <input type="text" name="login" required><br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" required><br>
-        <button type="submit">Connexion</button>
+    <?php if (isset($_GET['logout']) && $_GET['logout'] == 'success'): ?>
+        <p style="color:green;">Vous avez été déconnecté avec succès.</p>
+    <?php endif; ?>
+    <?php if (isset($_GET['register']) && $_GET['register'] == 'success'): ?>
+        <p style="color:green;">Inscription réussie. Veuillez vous connecter.</p>
+    <?php endif; ?>
+    <?php if (isset($error)): ?>
+        <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
+    <?php endif; ?>
+    <form method="post">
+        <label>Login: <input type="text" name="login" required></label><br>
+        <label>Mot de passe: <input type="password" name="password" required></label><br>
+        <input type="submit" value="Se connecter">
     </form>
 </body>
 </html>
+

@@ -66,31 +66,31 @@ $result = $conn->query("SELECT id, login, prenom, nom, password FROM utilisateur
 $conn->close();
 ?>
 <!-- I AM THE ADMIN PAGE -->
- <!-- Est-ce que je suis satisfait de moi-même ?
- De mon travail ?
- De la qualité de mon code ?
-    De la qualité de mon site ?
-    De la qualité de mon design ?
-    De la qualité de mon UX/UI ?
-Qu'est-ce que je peux faire de mieux ?
-    Comment puis-je m'améliorer ?
-    Comment puis-je rendre mon site plus attractif ?
+ <!-- Est-ce que je suis satisfait de moi-même ? non
+ De mon travail ? non
+ De la qualité de mon code ? non
+    De la qualité de mon site ? non
+    De la qualité de mon design ? non
+    De la qualité de mon UX/UI ? non
+Qu'est-ce que je peux faire de mieux ? tout
+    Comment puis-je m'améliorer ? en pratiquant 
+    Comment puis-je rendre mon site plus attractif ? 
     Comment puis-je rendre mon site plus interactif ?
-    Comment puis-je rendre mon site plus dynamique ?
-    Comment puis-je rendre mon site plus rapide ?
-    Comment puis-je rendre mon site plus sécurisé ?
-    Comment puis-je rendre mon site plus accessible ?
+    Comment puis-je rendre mon site plus dynamique ? 
+    Comment puis-je rendre mon site plus rapide ? 
+    Comment puis-je rendre mon site plus sécurisé ? 
+    Comment puis-je rendre mon site plus accessible ? 
     Comment puis-je rendre mon site plus responsive ?
-    Comment puis-je rendre mon site plus ergonomique ?
+    Comment puis-je rendre mon site plus ergonomique ? 
     Comment puis-je rendre mon site plus intuitif ?
-    Comment puis-je rendre mon site plus fluide ?
+    Comment puis-je rendre mon site plus fluide ? 
     Comment puis-je rendre mon site plus performant ?
     Comment puis-je rendre mon site plus fiable ?
-    Comment puis-je rendre mon site plus stable ?
-    Comment puis-je rendre mon site plus moderne ?
-    Comment puis-je rendre mon site plus innovant ?
-    Comment puis-je rendre mon site plus original ?
-    Comment puis-je rendre mon site plus unique ?
+    Comment puis-je rendre mon site plus stable ? 
+    Comment puis-je rendre mon site plus moderne ?  
+    Comment puis-je rendre mon site plus innovant ? 
+    Comment puis-je rendre mon site plus original ? 
+    Comment puis-je rendre mon site plus unique ? 
 
 
 
